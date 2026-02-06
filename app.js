@@ -19,26 +19,563 @@ const CONFIG = {
     "Since 1991, Julia’s Restaurant has welcomed families and friends with warm hospitality and freshly prepared meals.",
     "We focus on homemade flavor, generous portions, and a comfortable place to enjoy breakfast, lunch, and dinner together."
   ],
+  specials: {
+    note: "Monday through Friday from 11am–2pm",
+    lunch: [
+      {
+        day: "Monday",
+        items: [
+          { name: "Calabaza con Pollo", price: 9.0 },
+          { name: "Carne Guisada Plate", price: 10.0 },
+          { name: "Meat Loaf", price: 10.0 }
+        ]
+      },
+      {
+        day: "Tuesday",
+        items: [
+          { name: "Chicken Enmoladas", price: 10.0 },
+          { name: "Ranchero Steak Plate", price: 10.0 },
+          { name: "Chicken Fried Steak", price: 11.0 }
+        ]
+      },
+      {
+        day: "Wednesday",
+        items: [
+          { name: "Fideo con Pollo", price: 9.0 },
+          { name: "Chicken Entomatadas", price: 10.0 },
+          { name: "Hamburger Steak", price: 10.0 }
+        ]
+      },
+      {
+        day: "Thursday",
+        items: [
+          { name: "Chicken or Beef Taco Plate", price: 9.0 },
+          { name: "Pollo en Mole", price: 9.0 },
+          { name: "Chicken Fried Chicken", price: 11.0 }
+        ]
+      },
+      {
+        day: "Friday",
+        items: [
+          { name: "Chicken Fajita Monterrey", price: 11.0 },
+          { name: "Fried Fish & Shrimp Platter", price: 13.0 },
+          { name: "Camarones Rancheros", price: 13.0 }
+        ]
+      }
+    ],
+    nightNote: "Wednesday, Thursday & Friday Night Specials (4pm–8pm)",
+    night: [
+      {
+        day: "Wednesday",
+        items: [{ name: "Burger & Wing Combos", price: 16.0, note: "Additional toppings are extra" }]
+      },
+      {
+        day: "Thursday",
+        items: [{ name: "Steak Night (8oz Ribeye Steak)", price: 13.0, note: "Choice of 2 sides" }]
+      },
+      {
+        day: "Friday",
+        items: [{ name: "Grilled Salmon & Shrimp", price: 16.0, note: "Choice of 2 sides" }]
+      }
+    ]
+  },
   menu: [
     {
-      category: "Breakfast Favorites",
-      items: [
-        { name: "Huevos Rancheros", price: 10.99, note: "Eggs, tortillas, ranchera sauce, and refried beans." },
-        { name: "Migas Plate", price: 11.49, note: "Scrambled eggs, tortilla strips, pico de gallo, and cheese." }
+      name: "Breakfast",
+      note: "Served daily from 6:00 AM to 11:30 AM",
+      sections: [
+        {
+          name: "Breakfast Platters",
+          items: [
+            { name: "Southern Special", price: 7.0 },
+            { name: "Southernmost Special", price: 9.0 },
+            { name: "Julia’s Deluxe Special", price: 11.0 }
+          ]
+        },
+        {
+          name: "Carne & Egg Breakfast",
+          items: [
+            { name: "Choice of Chorizo, Bacon or Ham & Egg Platters", price: 8.0 },
+            { name: "Machacado & Eggs", price: 9.0 },
+            { name: "Barbacoa Plate", price: 10.0 },
+            { name: "Barbacoa & Egg Platter", price: 12.0 }
+          ]
+        },
+        {
+          name: "South of the Border Favorites",
+          items: [
+            { name: "Huevos a la Mexicana", price: 9.0, note: "A la Mexicana add $1.00" },
+            { name: "Huevos Rancheros", price: 10.0 },
+            { name: "Migas con Huevos", price: 8.0, note: "A la Mexicana $9.00" },
+            { name: "Nopales & Egg", price: 9.0, note: "When available" },
+            { name: "Chilaquiles & Egg", price: 10.0, note: "No egg $9.00 • Add Chicken $12.00" },
+            { name: "Chorizo con Migas", price: 10.0, note: "A la Mexicana $10.00" }
+          ]
+        },
+        {
+          name: "Barbacoa & Menudo",
+          items: [
+            {
+              name: "New Barbacoa & Menudo Platter (3 corn tortilla barbacoa tacos + large menudo)",
+              price: 14.0
+            }
+          ]
+        },
+        {
+          name: "Pork & Beef",
+          items: [
+            { name: "Pork Chop & Eggs Platter (1)", price: 12.0 },
+            { name: "Pork Chop & Eggs Platter (2)", price: 16.0 },
+            { name: "Sirloin Steak & Eggs", price: 15.0 },
+            { name: "Fajita & Eggs", price: 13.0 }
+          ]
+        },
+        {
+          name: "Omelets (Three Egg Omelets)",
+          items: [
+            { name: "Bacon, Ham, or Sausage Omelet", price: 10.0 },
+            { name: "Triple Meat Omelet", price: 11.0 },
+            { name: "Veggie Omelet", price: 10.0 },
+            { name: "Western Omelet", price: 10.0 },
+            { name: "South Mexican Omelet", price: 11.0 },
+            { name: "Spanish Omelet", price: 10.0 }
+          ]
+        },
+        {
+          name: "Pancakes",
+          items: [
+            { name: "Mini Bites (6)", price: 4.0 },
+            { name: "1 Pancake", price: 2.5 },
+            { name: "2 Pancakes", price: 4.5 },
+            { name: "3 Pancakes", price: 6.0 },
+            { name: "Pancake & Egg Platter", price: 10.0 },
+            { name: "Deuces Wild Pancake Platter", price: 12.0 },
+            { name: "Julia’s Supreme", price: 13.0 }
+          ]
+        },
+        {
+          name: "Breakfast Sides",
+          items: [
+            { name: "(2) French Toast & (2) Bacon", price: 6.0 },
+            { name: "(3) French Toast & (3) Bacon", price: 8.0 },
+            { name: "Biscuits & Gravy (half)", price: 5.0 },
+            { name: "Biscuits & Gravy (full)", price: 8.0 },
+            { name: "Oatmeal & Toast", price: 5.0 }
+          ]
+        },
+        {
+          name: "Kids Breakfast (Drink not included)",
+          items: [
+            { name: "French Toast & Egg", price: 5.0 },
+            { name: "Egg & Hashbrown", price: 5.0 },
+            { name: "Pancake & Egg", price: 5.0 }
+          ]
+        },
+        {
+          name: "Julia-Made Taquitos",
+          note:
+            "Create your own • 2 items for $5.00 • Add any additional item for $0.50 • Add a la Mexicana for $0.50¢",
+          items: [
+            {
+              name: "2 items (Egg / Bacon / Sausage / Ham / Chorizo / Potato / Beans / Cheese)",
+              price: 5.0
+            },
+            { name: "Taco Special (choice of meat, potatoes & cheese)", price: 6.0 },
+            {
+              name: "Carne Guisada, Barbacoa, Machacado or Fajita & Egg",
+              price: 8.0,
+              note: "A la Mexicana add $1.00"
+            },
+            { name: "(3) Barbacoa Taquitos", price: 7.5 }
+          ]
+        },
+        {
+          name: "Breakfast À La Carte",
+          items: [
+            { name: "(2) Bacon", price: 2.5 },
+            { name: "(2) Sausage", price: 3.0 },
+            { name: "Hashbrowns", price: 2.5 },
+            { name: "Beans", price: 2.5 },
+            { name: "Biscuit", price: 1.5 },
+            { name: "Grilled Biscuit", price: 2.0 },
+            { name: "Flour Tortilla", price: 1.5 },
+            { name: "(1) Egg", price: 1.5 },
+            { name: "(2) Eggs", price: 3.0 }
+          ]
+        }
       ]
     },
     {
-      category: "Lunch & Dinner",
-      items: [
-        { name: "Chicken Fried Steak", price: 13.99, note: "Served with mashed potatoes and gravy." },
-        { name: "Grilled Chicken Plate", price: 12.99, note: "Served with rice, vegetables, and house salad." }
+      name: "Appetizers",
+      sections: [
+        {
+          name: "Appetizers",
+          items: [
+            { name: "Chips & Salsa", price: 2.5 },
+            { name: "Large French Fries", price: 4.0 },
+            { name: "Onion Rings", price: 6.0 },
+            { name: "Chili or Bacon & Cheese Fries", price: 6.0 },
+            { name: "Bowl of Chili", price: 7.0, note: "w/ pinto beans, cheese & chopped onions" },
+            { name: "Chile con Queso", price: 8.0 },
+            { name: "Avocado Dip & Chips", price: 8.0, note: "A la Mexicana $9.00" },
+            {
+              name: "Queso Flameado w/ Chorizo",
+              price: 9.0,
+              note: "Served w/ corn tortillas • A la Mexicana $10.00"
+            },
+            {
+              name: "Queso Flameado w/ Beef Fajitas",
+              price: 10.0,
+              note: "Served w/ corn tortillas • A la Mexicana $11.00"
+            },
+            { name: "Cheese Nachos", price: 8.0 },
+            { name: "Bean & Cheese Nachos", price: 9.0 },
+            { name: "Nachos Compuestos (Chicken or Beef)", price: 12.0 }
+          ]
+        }
       ]
     },
     {
-      category: "Burgers & Sandwiches",
-      items: [
-        { name: "Classic Cheeseburger", price: 12.49, note: "Lettuce, tomato, onion, pickles, and fries." },
-        { name: "Chicken Sandwich", price: 11.99, note: "Grilled chicken breast with fries." }
+      name: "Soups & Salads",
+      sections: [
+        {
+          name: "Soups & Salads",
+          items: [
+            { name: "Garden Salad", price: 4.0 },
+            { name: "Chef’s (Ham) Salad", price: 10.0 },
+            { name: "Grilled Chicken Salad", price: 11.0 },
+            { name: "Shrimp Salad", price: 12.0 },
+            { name: "Grilled Beef or Chicken Fajita Salad", price: 12.0 },
+            { name: "Beef or Chicken Caldo or Menudo", price: 11.0, note: "8oz Cup $2.50" }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Burgers & Sandwiches",
+      sections: [
+        {
+          name: "South Texas Sandwiches",
+          note: "All sandwiches served w/ fries. Substitute onion rings $2.",
+          items: [
+            { name: "Grilled Cheese", price: 7.5 },
+            { name: "Grilled Ham & Cheese", price: 9.0 },
+            { name: "BLT", price: 10.0 },
+            { name: "Patty Melt on Wheat", price: 11.0 },
+            { name: "BBQ Sandwich or Open Face", price: 11.0 }
+          ]
+        },
+        {
+          name: "Julia’s Juicy Burgers",
+          note: "Served w/ fries (or substitute onion rings $2). Extra patty $4.",
+          items: [
+            { name: "Hamburger", price: 10.0 },
+            { name: "Cheeseburger", price: 11.0 },
+            { name: "BBQ Bacon Burger", price: 12.0 },
+            { name: "Chili Cheese Burger", price: 12.0 },
+            { name: "Swiss Mushroom Burger", price: 12.0 },
+            { name: "Southern Mexican Burger", price: 12.0 },
+            { name: "South of the Border Burger", price: 14.0 }
+          ]
+        },
+        {
+          name: "Chicken Burgers",
+          note: "Served w/ fries & veggies on the side. Add mushrooms for $2.",
+          items: [
+            { name: "Chicken Monterey Burger", price: 12.0 },
+            { name: "Grilled or Fried Buffalo Chicken Burger", price: 12.0 }
+          ]
+        },
+        {
+          name: "Chicken Strips",
+          items: [{ name: "Chicken Strips (6 pc)", price: 10.0 }]
+        }
+      ]
+    },
+    {
+      name: "Traditional American Platters",
+      sections: [
+        {
+          name: "Traditional American Platters",
+          note:
+            "Served w/ choice of corn, green beans, or broccoli & buttered Texas toast. Choice of mashed potatoes, fries, or loaded baked potato ($1.50 extra).",
+          items: [
+            { name: "BBQ Brisket or Roast Beef Platter", price: 11.0 },
+            { name: "Grilled Chicken Platter", price: 11.0 },
+            { name: "Country Fried Steak or Chicken Fried Chicken", price: 12.0 },
+            { name: "Hamburger Steak", price: 11.0 },
+            { name: "Grilled or Fried Porkchop Platter (1 piece)", price: 11.0 },
+            { name: "Grilled or Fried Porkchop Platter (2 piece)", price: 15.0 }
+          ]
+        }
+      ]
+    },
+    {
+      name: "South of the Border Favorites",
+      sections: [
+        {
+          name: "South of the Border Favorites",
+          note: "Entrees served w/ rice, beans & add avocado $2.50 extra.",
+          items: [
+            { name: "Cheese Mexican Platter", price: 11.0 },
+            { name: "Beef or Chicken Mexican Platter", price: 12.0 },
+            {
+              name: "Fajita Enchilada Platter",
+              price: 15.0,
+              note: "3 enchiladas, sautéed fajitas, avocado & choice of tortilla"
+            },
+            {
+              name: "Tampiqueña Platter",
+              price: 15.0,
+              note: "1 enchilada, 1 taco, 1 chalupa, avocado & choice of tortilla"
+            },
+            {
+              name: "Fajita Supreme Platter",
+              price: 15.0,
+              note: "Fajitas, 2 chicken suizas, 2 flautas + sides"
+            },
+            {
+              name: "Carne Guisada Supreme Platter",
+              price: 15.0,
+              note: "Rice, beans, carne guisada, 2 enchiladas, 2 beef tacos + tortilla"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Enchiladas",
+      sections: [
+        {
+          name: "Enchiladas",
+          note: "(3) enchiladas served with rice & beans. Topped w/ onions $0.50",
+          items: [
+            { name: "Beef / Chicken / Chili Cheese", price: 11.0 },
+            { name: "Deluxe", price: 12.0 },
+            { name: "Enmoladas / Entomatadas / Suizas", price: 11.0, note: "Sour cream & guacamole" },
+            { name: "Shrimp Suizas", price: 12.0, note: "A la carte $9.00" }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Tacos, Chalupas & Burritos",
+      sections: [
+        {
+          name: "American Tacos & Chalupas",
+          note:
+            "These entrees: (3) tacos and (2) chalupas topped w/ lettuce, tomato & mixed cheese and served w/ rice & beans.",
+          items: [
+            { name: "Bean & Cheese Chalupas (2 plate)", price: 9.0, note: "A la carte (3) $7.50" },
+            { name: "Beef or Chicken Chalupas (2 plate)", price: 10.0, note: "A la carte (3) $8.50" },
+            { name: "Beef or Chicken Tacos (3 plate)", price: 10.0, note: "A la carte (3) $7.50" },
+            { name: "Chicken Flauta (3) Plate", price: 10.0, note: "A la carte (4 w/ all toppings) $10" }
+          ]
+        },
+        {
+          name: "Burritos on Flour Tortillas",
+          note: "Topped w/ chili meat & served w/ rice, beans, and avocado or sour cream $2.",
+          items: [
+            { name: "Cheese, Beef, or Chicken", price: 12.0 },
+            { name: "Carne Guisada, Ranchero Steak, Beef, or Chicken Fajita", price: 14.0 }
+          ]
+        },
+        {
+          name: "Flour Tortillas Tacos",
+          note: "Choices: Beef or Chicken Fajita, Carne Guisada, Picadillo, or Ranchero Steak",
+          items: [
+            { name: "Plain Beef or Chicken", price: 8.0 },
+            { name: "Beef or Chicken Taco Salad (Crispy Shell)", price: 10.0, note: "Add beef or chicken fajita $2" }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Southern Mexican Dishes",
+      sections: [
+        {
+          name: "Southern Mexican Dishes",
+          note: "Served with charro beans, rice & choice of flour or corn tortilla.",
+          items: [
+            { name: "Pollo en Mole Plate", price: 10.0, note: "Served with mashed beans & rice only" },
+            { name: "Carne Guisada Plate", price: 11.0 },
+            { name: "Ranchero Steak Plate", price: 11.0 },
+            {
+              name: "Chile Relleno Plate",
+              price: 12.0,
+              note: "Stuffed w/ ground beef, topped w/ white cheese and salsa"
+            }
+          ]
+        },
+        {
+          name: "Tacos & Chalupas a la Mexicana",
+          note:
+            "Plate entrees served w/ rice & charro beans. Chalupas topped w/ melted monterrey cheese. Tacos include avocado, queso fresco, grilled onions, cilantro.",
+          items: [
+            { name: "Beef or Chicken Fajita (3) Taquitos Platters", price: 12.0, note: "A la carte $9.00" },
+            { name: "(2) Chalupas Beef or Chicken Fajita Platter", price: 12.0, note: "A la carte (3 chalupas) $9.00" }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Fajitas, Quesadillas & Nachos",
+      sections: [
+        {
+          name: "Southern Tex Chicken & Beef Fajitas",
+          note:
+            "Fajitas are thinly cut, sautéed w/ onion & bell pepper and served w/ rice & charro beans. Monterey/ranchera/surf & turf topped w/ sliced avocado. Add guacamole $2.",
+          items: [
+            { name: "Grilled Chicken Monterey", price: 12.0, note: "Add mushrooms $2" },
+            { name: "Chicken or Beef Fajitas", price: 14.0 },
+            { name: "Chicken or Beef Fajita Monterey", price: 16.0 },
+            { name: "Chicken or Beef Fajita Ranchera", price: 16.0 },
+            { name: "Fajita Surf & Turf", price: 16.0 }
+          ]
+        },
+        {
+          name: "Quesadillas & Nachos",
+          items: [
+            { name: "Chicken or Beef Fajita Quesadilla", price: 13.0 },
+            { name: "Choice of Fajita South Texas Combo", price: 16.0, note: "Nachos, quesadillas & flautas" },
+            { name: "1/2 Fajita Nachos", price: 12.0 },
+            { name: "Full Order Fajita Nachos", price: 16.0 },
+            { name: "1/2 Fajita Nachos Supreme", price: 14.0 },
+            { name: "Full Order Fajita Nachos Supreme", price: 18.0 },
+            { name: "1/2 Shrimp Nachos", price: 14.0 },
+            { name: "Full Order Shrimp Nachos", price: 18.0 }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Steaks",
+      sections: [
+        {
+          name: "South of the Border Steaks",
+          note:
+            "Steaks served w/ choice of fries or mashed potatoes, vegetable of the day, house salad and buttered Texas toast. Add fully loaded baked potato $1.50. Add grilled shrimp for $5.",
+          items: [
+            { name: "Angus Beef Sirloin Steak 10oz", price: 16.0 },
+            { name: "Angus Beef Rib Eye Steak 10oz", price: 18.0 }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Botanas & Parrilladas",
+      sections: [
+        {
+          name: "Botanas & Parrilladas",
+          note: "Choice of beef, chicken, or mixed.",
+          items: [
+            { name: "Fajita Botana (1)", price: 12.0 },
+            { name: "Fajita Botana (2)", price: 26.0 },
+            { name: "Fajita Botana (3)", price: 52.0 },
+            { name: "Fajita Botana (4)", price: 66.0 },
+            { name: "Parrilladas (2)", price: 26.0 },
+            { name: "Parrilladas (4)", price: 52.0 },
+            { name: "Parrilladas (6)", price: 66.0 }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Seafood",
+      sections: [
+        {
+          name: "Fajita & Seafood Botana Platters",
+          items: [
+            { name: "For 4 people", price: 56.0 },
+            { name: "For 6 people", price: 78.0 }
+          ]
+        },
+        {
+          name: "On the Sea Side",
+          note:
+            "All platters served w/ choice of 2 sides (mashed potatoes, fries, rice, salad, or Texas toast). Add a loaded baked potato for $1.50.",
+          items: [
+            { name: "Fried Fish or Tilapia", price: 12.0 },
+            { name: "Gulf Shrimp Platter", price: 14.0 },
+            { name: "Fish & Shrimp Combo", price: 16.0 },
+            { name: "Fried Fish or Shrimp on a Bun", price: 12.0 },
+            { name: "Shrimp Cocktail (SM)", price: 10.0 },
+            { name: "Shrimp Cocktail (LG)", price: 12.0 },
+            { name: "Caldo de Mariscos Bowl", price: 12.0 },
+            { name: "Grilled Tilapia or Salmon", price: 13.0, note: "Add Grilled Shrimp $4" },
+            { name: "Grilled Fish or Shrimp Tacos", price: 13.0 },
+            { name: "Camarones Rancheros", price: 15.0 },
+            { name: "Nopales & Camarones Rancheros", price: 14.0, note: "When available" },
+            { name: "Rodeo Platter", price: 18.0 }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Wings",
+      sections: [
+        {
+          name: "Buffalo Wings",
+          note: "Flavors: Mild / Original Hot / Lemon Pepper / BBQ / Garlic Parmesan",
+          items: [
+            { name: "6 Wings & Fries", price: 12.0 },
+            { name: "12 Wings & Fries", price: 18.0 },
+            { name: "18 Wings & Fries", price: 26.0 }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Kids Lunch Menu",
+      note: "Drink not included",
+      sections: [
+        {
+          name: "Kids Lunch Menu",
+          items: [
+            { name: "Beef Taco Plate w/ Rice & Beans", price: 5.0 },
+            { name: "Enchilada Plate w/ Rice & Beans", price: 5.0 },
+            { name: "Grilled Cheese Sandwich w/ Fries", price: 5.0 },
+            { name: "Chicken Strips (3 pc) w/ Fries", price: 6.0 },
+            { name: "Hamburger w/ Fries", price: 6.0 },
+            { name: "Cheeseburger w/ Fries", price: 7.0 },
+            { name: "Carne Guisada w/ Rice & Beans", price: 7.0 }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Desserts",
+      sections: [
+        {
+          name: "Desserts",
+          items: [
+            { name: "A Slice of Pie", price: 4.0, note: "Pecan, Apple, Cherry" },
+            { name: "Try A La Mode", price: 7.5, note: "Your choice of ice cream" }
+          ]
+        }
+      ]
+    },
+    {
+      name: "Drinks",
+      sections: [
+        {
+          name: "Drinks",
+          items: [
+            { name: "Decaf or Regular Coffee" },
+            { name: "Hot Tea or Chocolate" },
+            { name: "2% Milk or Chocolate Milk" },
+            { name: "Iced Tea, Sweet Tea, Raspberry Tea, Lemonade" },
+            { name: "Coke, Diet Coke, Sprite, Dr. Pepper" },
+            {
+              name: "Can Drinks (Coke, Diet Coke, Sprite, Dr Pepper, Pepsi, Diet Pepsi, Sunkist, Root Beer, Big Red)"
+            },
+            { name: "Cokas Mexicanas" },
+            { name: "Mineral Water" },
+            { name: "Bottled Water" },
+            { name: "Bottled Orange Fanta 1/2 litro" },
+            { name: "Mexican Coca Bottled 1/2 litro" }
+          ]
+        }
       ]
     }
   ]
@@ -109,25 +646,75 @@ function renderInfo() {
   `;
 }
 
+function formatPrice(price) {
+  return typeof price === "number" ? money.format(price) : "";
+}
+
+function renderItem(item) {
+  const formattedPrice = formatPrice(item.price);
+  return `
+    <div class="menu-item">
+      <div class="menu-row">
+        <span class="item-name">${item.name}</span>
+        ${formattedPrice ? `<span class="item-price">${formattedPrice}</span>` : ""}
+      </div>
+      ${item.note ? `<p class="item-note">${item.note}</p>` : ""}
+    </div>
+  `;
+}
+
+function renderSpecials() {
+  const lunchMarkup = CONFIG.specials.lunch
+    .map(
+      (dayBlock) => `
+        <article class="menu-category">
+          <h4>${dayBlock.day}</h4>
+          ${dayBlock.items.map(renderItem).join("")}
+        </article>
+      `
+    )
+    .join("");
+
+  const nightMarkup = CONFIG.specials.night
+    .map(
+      (dayBlock) => `
+        <article class="menu-category">
+          <h4>${dayBlock.day}</h4>
+          ${dayBlock.items.map(renderItem).join("")}
+        </article>
+      `
+    )
+    .join("");
+
+  return `
+    <section class="menu-specials">
+      <h3>Specials</h3>
+      <p class="item-note">${CONFIG.specials.note}</p>
+      ${lunchMarkup}
+      <p class="item-note">${CONFIG.specials.nightNote}</p>
+      ${nightMarkup}
+    </section>
+  `;
+}
+
 function renderMenu() {
   const host = document.getElementById("menuRoot");
   if (!host) return;
 
   const menuMarkup = CONFIG.menu
     .map(
-      (group) => `
+      (category) => `
       <article class="menu-category">
-        <h3>${group.category}</h3>
-        ${group.items
+        <h3>${category.name}</h3>
+        ${category.note ? `<p class="item-note">${category.note}</p>` : ""}
+        ${category.sections
           .map(
-            (item) => `
-            <div class="menu-item">
-              <div class="menu-row">
-                <span class="item-name">${item.name}</span>
-                <span class="item-price">${money.format(item.price)}</span>
-              </div>
-              ${item.note ? `<p class="item-note">${item.note}</p>` : ""}
-            </div>
+            (section) => `
+            <section class="menu-section">
+              <h4>${section.name}</h4>
+              ${section.note ? `<p class="item-note">${section.note}</p>` : ""}
+              ${section.items.map(renderItem).join("")}
+            </section>
           `
           )
           .join("")}
@@ -137,7 +724,8 @@ function renderMenu() {
     .join("");
 
   host.innerHTML = `
-    <h2>Menu Highlights</h2>
+    <h2>Menu</h2>
+    ${renderSpecials()}
     ${menuMarkup}
   `;
 }
