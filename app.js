@@ -609,9 +609,16 @@ function safeImage(imgEl) {
 function renderHero() {
   const host = document.getElementById("heroRoot");
   if (!host) return;
+  const phoneDial = (CONFIG.phone || "").replace(/\D/g, "");
 
   const wrapper = document.createElement("div");
   wrapper.className = "hero-inner";
+
+  const heroTop = document.createElement("div");
+  heroTop.className = "hero-top";
+
+  const heroBrand = document.createElement("div");
+  heroBrand.className = "hero-brand";
 
   const logoWrap = document.createElement("div");
   logoWrap.className = "hero-logo-wrap";
@@ -632,6 +639,12 @@ function renderHero() {
   subtitle.className = "hero-subtitle";
   subtitle.textContent = CONFIG.subtitle;
 
+  const callBtn = document.createElement("a");
+  callBtn.className = "call-btn";
+  callBtn.href = `tel:${phoneDial}`;
+  callBtn.textContent = "Call To Place Order";
+  callBtn.setAttribute("aria-label", `Call ${CONFIG.businessName} at ${CONFIG.phone} to place an order`);
+
   const pill = document.createElement("span");
   pill.className = "hero-pill";
   pill.textContent = "Since 1991";
@@ -639,12 +652,15 @@ function renderHero() {
   const chips = document.createElement("div");
   chips.className = "hero-chips";
   chips.innerHTML = `
-    <span class="chip"><a href="tel:+19562335653">📞 ${CONFIG.phone}</a></span>
+    <span class="chip"><a href="tel:${phoneDial}">📞 ${CONFIG.phone}</a></span>
     <span class="chip">📍 ${CONFIG.address}</span>
     <span class="chip">🕒 ${CONFIG.specials.note}</span>
   `;
 
-  wrapper.append(logoWrap, pill, title, subtitle, chips);
+  heroBrand.append(logoWrap, pill, title, subtitle);
+  heroTop.append(heroBrand, callBtn);
+
+  wrapper.append(heroTop, chips);
   host.replaceChildren(wrapper);
 }
 
@@ -661,13 +677,14 @@ function renderStory() {
 function renderInfo() {
   const host = document.getElementById("infoRoot");
   if (!host) return;
+  const phoneDial = (CONFIG.phone || "").replace(/\D/g, "");
 
   host.innerHTML = `
     <h2 class="section-title">Restaurant Info</h2>
     <div class="info-grid">
       <article class="info-card">
         <h3>Contact</h3>
-        <p><strong>Phone:</strong> <a href="tel:+19562335653">${CONFIG.phone}</a></p>
+        <p><strong>Phone:</strong> <a href="tel:${phoneDial}">${CONFIG.phone}</a></p>
       </article>
       <article class="info-card">
         <h3>Address</h3>

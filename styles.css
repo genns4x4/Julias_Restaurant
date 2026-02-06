@@ -118,6 +118,18 @@ footer {
     radial-gradient(circle at top right, rgba(247, 179, 43, 0.2), transparent 55%);
 }
 
+.hero-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.hero-brand {
+  display: grid;
+  gap: 0.65rem;
+}
+
 .hero-logo-wrap {
   display: inline-flex;
   background: transparent;
@@ -158,6 +170,40 @@ footer {
   display: flex;
   flex-wrap: wrap;
   gap: 0.55rem;
+}
+
+.call-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.38rem;
+  background: #b3122a;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 12px 18px;
+  border-radius: 999px;
+  font-weight: 700;
+  font-size: 0.96rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 5px 14px rgba(56, 6, 14, 0.2);
+  min-height: 46px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background-color 0.2s ease;
+}
+
+.call-btn::before {
+  content: "📞";
+}
+
+.call-btn:hover,
+.call-btn:focus-visible {
+  background: #950f23;
+  transform: translateY(-1px);
+  box-shadow: 0 8px 16px rgba(56, 6, 14, 0.28);
+}
+
+.call-btn:focus-visible {
+  outline: 2px solid #f7b32b;
+  outline-offset: 2px;
 }
 
 .chip {
@@ -415,5 +461,17 @@ h2::after,
     flex-wrap: wrap;
     overflow: visible;
     padding-bottom: 0;
+  }
+}
+
+@media (max-width: 767px) {
+  .hero-top {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .call-btn {
+    width: 100%;
+    text-align: center;
   }
 }
