@@ -1,46 +1,38 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Menú digital de restaurante Tex-Mex" />
-  <title>Tex-Mex Restaurant | Menú Digital</title>
+  <meta name="description" content="Julia's Restaurant menu and ordering links." />
+  <title>Julia's Restaurant</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="app.js"></script>
 </head>
 <body>
-  <nav class="top-nav" aria-label="Navegación principal">
-    <a href="#top">Inicio</a>
-    <a href="#historia">Nuestra Historia</a>
-    <a href="#datos">Datos Generales</a>
-    <a href="#menu">Menú</a>
-    <a href="#acciones">Acciones</a>
-  </nav>
+  <main class="page-shell">
+    <header id="top">
+      <div id="heroRoot"></div>
+    </header>
 
-  <header id="top" aria-label="Hero section">
-    <div class="section-content" id="hero-content"></div>
-  </header>
-
-  <main>
-    <section id="historia" aria-labelledby="historia-title">
-      <div class="section-content" id="historia-content"></div>
+    <section id="story">
+      <div id="storyRoot"></div>
     </section>
 
-    <section id="datos" aria-labelledby="datos-title">
-      <div class="section-content" id="datos-content"></div>
+    <section id="info">
+      <div id="infoRoot"></div>
     </section>
 
-    <section id="menu" aria-labelledby="menu-title">
-      <div class="section-content" id="menu-content"></div>
+    <section id="menu">
+      <div id="menuRoot"></div>
     </section>
 
-    <section id="acciones" aria-labelledby="acciones-title">
-      <div class="section-content" id="acciones-content"></div>
+    <section id="actions">
+      <div id="actionsRoot"></div>
     </section>
+
+    <footer>
+      <div id="footerRoot"></div>
+    </footer>
   </main>
-
-  <footer>
-    <div class="section-content" id="footer-content"></div>
-  </footer>
 </body>
 </html>
