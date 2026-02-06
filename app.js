@@ -613,7 +613,19 @@ function renderHero() {
   subtitle.className = "hero-subtitle";
   subtitle.textContent = CONFIG.subtitle;
 
-  wrapper.append(logoWrap, title, subtitle);
+  const pill = document.createElement("span");
+  pill.className = "hero-pill";
+  pill.textContent = "Since 1991";
+
+  const chips = document.createElement("div");
+  chips.className = "hero-chips";
+  chips.innerHTML = `
+    <span class="chip"><a href="tel:+19562335653">📞 ${CONFIG.phone}</a></span>
+    <span class="chip">📍 ${CONFIG.address}</span>
+    <span class="chip">🕒 ${CONFIG.specials.note}</span>
+  `;
+
+  wrapper.append(logoWrap, pill, title, subtitle, chips);
   host.replaceChildren(wrapper);
 }
 
@@ -622,7 +634,7 @@ function renderStory() {
   if (!host) return;
 
   host.innerHTML = `
-    <h2>Our Story</h2>
+    <h2 class="section-title">Our Story</h2>
     ${CONFIG.story.map((line) => `<p>${line}</p>`).join("")}
   `;
 }
@@ -632,7 +644,7 @@ function renderInfo() {
   if (!host) return;
 
   host.innerHTML = `
-    <h2>Restaurant Info</h2>
+    <h2 class="section-title">Restaurant Info</h2>
     <div class="info-grid">
       <article class="info-card">
         <h3>Contact</h3>
@@ -704,7 +716,7 @@ function renderMenu() {
   const menuMarkup = CONFIG.menu
     .map(
       (category) => `
-      <article class="menu-category">
+      <article class="menu-category category-card">
         <h3>${category.name}</h3>
         ${category.note ? `<p class="item-note">${category.note}</p>` : ""}
         ${category.sections
@@ -724,7 +736,7 @@ function renderMenu() {
     .join("");
 
   host.innerHTML = `
-    <h2>Menu</h2>
+    <h2 class="section-title">Menu</h2>
     ${renderSpecials()}
     ${menuMarkup}
   `;
@@ -744,7 +756,7 @@ function renderActions() {
   if (!host) return;
 
   host.innerHTML = `
-    <h2>Order & Follow</h2>
+    <h2 class="section-title">Order & Follow</h2>
     <div class="actions-grid">
       <a class="btn btn-doordash" href="${CONFIG.links.doordash}" target="_blank" rel="noopener noreferrer">Order on DoorDash</a>
       <button class="btn btn-ubereats" id="uberBtn" type="button">Uber Eats</button>
