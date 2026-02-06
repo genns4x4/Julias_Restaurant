@@ -745,11 +745,10 @@ function renderSpecials() {
   `;
 }
 
-function toCategorySlug(label) {
-  return label
+function slugifyCategory(text) {
+  return "cat-" + text
     .toLowerCase()
-    .replaceAll("'", "")
-    .replaceAll("&", "and")
+    .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
@@ -786,9 +785,9 @@ function setupCategoryTracking() {
 function renderCategoryNav(menuByName) {
   const buttonMarkup = CONFIG.categoryNav
     .map((categoryName) => {
-      const targetId = `cat-${toCategorySlug(categoryName)}`;
+      const targetId = slugifyCategory(categoryName);
       const exists = menuByName.has(categoryName);
-      return `<button class="cat-btn" type="button" data-target-id="${targetId}" ${
+      return `<button class="cat-btn" type="button" data-target-id="${targetId}" data-category-name="${categoryName}" ${
         exists ? "" : 'aria-disabled="true" disabled'
       }>${categoryName}</button>`;
     })
@@ -810,9 +809,9 @@ function renderMenu() {
   const menuMarkup = CONFIG.menu
     .map(
       (category) => `
-      <article class="menu-category category-card" id="cat-${toCategorySlug(
+      <article class="menu-category category-card" id="${slugifyCategory(category.name)}" data-category-id="${
         category.name
-      )}" data-category-id="${category.name}">
+      }">
         <h3>${category.name}</h3>
         ${category.note ? `<p class="item-note">${category.note}</p>` : ""}
         ${category.sections
@@ -841,8 +840,12 @@ function renderMenu() {
   host.querySelectorAll(".cat-btn[data-target-id]").forEach((button) => {
     button.addEventListener("click", () => {
       const targetId = button.dataset.targetId;
+      const categoryName = button.dataset.categoryName || button.textContent || "";
       const targetEl = targetId ? document.getElementById(targetId) : null;
-      if (!targetEl) return;
+      if (!targetEl) {
+        console.warn("Category not found:", categoryName, targetId);
+        return;
+      }
       setActiveCategoryButton(targetId);
       targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
     });
@@ -850,7 +853,7 @@ function renderMenu() {
 
   const firstAvailable = CONFIG.categoryNav.find((name) => menuByName.has(name));
   if (firstAvailable) {
-    setActiveCategoryButton(`cat-${toCategorySlug(firstAvailable)}`);
+    setActiveCategoryButton(slugifyCategory(firstAvailable));
   }
 
   setupCategoryTracking();
