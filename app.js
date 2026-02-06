@@ -79,6 +79,25 @@ const CONFIG = {
       }
     ]
   },
+  categoryNav: [
+    "Breakfast",
+    "Appetizers",
+    "Soups & Salads",
+    "Burgers & Sandwiches",
+    "Traditional American Platters",
+    "South of the Border Favorites",
+    "Enchiladas",
+    "Tacos, Chalupas & Burritos",
+    "Southern Mexican Dishes",
+    "Fajitas & Quesadillas & Nachos",
+    "Steaks",
+    "Botanas & Parrilladas",
+    "Seafood",
+    "Wings",
+    "Kids Lunch Menu",
+    "Desserts",
+    "Drinks"
+  ],
   menu: [
     {
       name: "Breakfast",
@@ -709,14 +728,74 @@ function renderSpecials() {
   `;
 }
 
+function toCategorySlug(label) {
+  return label
+    .toLowerCase()
+    .replaceAll("'", "")
+    .replaceAll("&", "and")
+    .replace(/[^a-z0-9]+/g, "-")
+    .replace(/-+/g, "-")
+    .replace(/^-|-$/g, "");
+}
+
+function setActiveCategoryButton(targetId) {
+  const buttons = document.querySelectorAll(".cat-btn[data-target-id]");
+  buttons.forEach((button) => {
+    const isActive = button.dataset.targetId === targetId;
+    button.classList.toggle("is-active", isActive);
+  });
+}
+
+function setupCategoryTracking() {
+  const sections = Array.from(document.querySelectorAll(".menu-category[data-category-id]"));
+  if (!sections.length) return;
+
+  const observer = new IntersectionObserver(
+    (entries) => {
+      const visible = entries
+        .filter((entry) => entry.isIntersecting)
+        .sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+
+      if (visible?.target?.id) {
+        setActiveCategoryButton(visible.target.id);
+      }
+    },
+    { threshold: [0.25, 0.5, 0.75], rootMargin: "-15% 0px -60% 0px" }
+  );
+
+  sections.forEach((section) => observer.observe(section));
+}
+
+function renderCategoryNav(menuByName) {
+  const buttonMarkup = CONFIG.categoryNav
+    .map((categoryName) => {
+      const targetId = `cat-${toCategorySlug(categoryName)}`;
+      const exists = menuByName.has(categoryName);
+      return `<button class="cat-btn" type="button" data-target-id="${targetId}" ${
+        exists ? "" : 'aria-disabled="true" disabled'
+      }>${categoryName}</button>`;
+    })
+    .join("");
+
+  return `
+    <div class="category-nav" aria-label="Menu categories">
+      <div class="category-buttons">${buttonMarkup}</div>
+    </div>
+  `;
+}
+
 function renderMenu() {
   const host = document.getElementById("menuRoot");
   if (!host) return;
 
+  const menuByName = new Set(CONFIG.menu.map((category) => category.name));
+
   const menuMarkup = CONFIG.menu
     .map(
       (category) => `
-      <article class="menu-category category-card">
+      <article class="menu-category category-card" id="cat-${toCategorySlug(
+        category.name
+      )}" data-category-id="${category.name}">
         <h3>${category.name}</h3>
         ${category.note ? `<p class="item-note">${category.note}</p>` : ""}
         ${category.sections
@@ -737,9 +816,27 @@ function renderMenu() {
 
   host.innerHTML = `
     <h2 class="section-title">Menu</h2>
+    ${renderCategoryNav(menuByName)}
     ${renderSpecials()}
     ${menuMarkup}
   `;
+
+  host.querySelectorAll(".cat-btn[data-target-id]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const targetId = button.dataset.targetId;
+      const targetEl = targetId ? document.getElementById(targetId) : null;
+      if (!targetEl) return;
+      setActiveCategoryButton(targetId);
+      targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  });
+
+  const firstAvailable = CONFIG.categoryNav.find((name) => menuByName.has(name));
+  if (firstAvailable) {
+    setActiveCategoryButton(`cat-${toCategorySlug(firstAvailable)}`);
+  }
+
+  setupCategoryTracking();
 }
 
 function showToast(message) {
