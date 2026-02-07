@@ -745,13 +745,29 @@ function renderSpecials() {
   `;
 }
 
+function normalizeCategoryName(text) {
+  return String(text || "")
+    .toLowerCase()
+    .replace(/&/g, "and")
+    .replace(/\band\b/g, " ")
+    .replace(/[^a-z0-9]+/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
 function slugifyCategory(text) {
-  return "cat-" + text
+  return "cat-" + String(text || "")
     .toLowerCase()
     .replace(/&/g, "and")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/-+/g, "-")
     .replace(/^-|-$/g, "");
+}
+
+function findMatchingCategoryName(navLabel, categoryNames) {
+  const targetNorm = normalizeCategoryName(navLabel);
+  const match = (categoryNames || []).find((catName) => normalizeCategoryName(catName) === targetNorm);
+  return match || null;
 }
 
 function setActiveCategoryButton(targetId) {
@@ -782,14 +798,18 @@ function setupCategoryTracking() {
   sections.forEach((section) => observer.observe(section));
 }
 
-function renderCategoryNav(menuByName) {
+function renderCategoryNav() {
+  const allCategoryNames = (CONFIG.menu || []).map((category) => category.name);
+
   const buttonMarkup = CONFIG.categoryNav
-    .map((categoryName) => {
-      const targetId = slugifyCategory(categoryName);
-      const exists = menuByName.has(categoryName);
-      return `<button class="cat-btn" type="button" data-target-id="${targetId}" data-category-name="${categoryName}" ${
-        exists ? "" : 'aria-disabled="true" disabled'
-      }>${categoryName}</button>`;
+    .map((navLabel) => {
+      const matchName = findMatchingCategoryName(navLabel, allCategoryNames);
+      if (matchName) {
+        const targetId = slugifyCategory(matchName);
+        return `<button class="cat-btn" type="button" data-target-id="${targetId}" data-category-name="${navLabel}">${navLabel}</button>`;
+      }
+
+      return `<button class="cat-btn" type="button" data-target-id="" data-category-name="${navLabel}" aria-disabled="true" disabled>${navLabel}</button>`;
     })
     .join("");
 
@@ -804,7 +824,7 @@ function renderMenu() {
   const host = document.getElementById("menuRoot");
   if (!host) return;
 
-  const menuByName = new Set(CONFIG.menu.map((category) => category.name));
+  const allCategoryNames = (CONFIG.menu || []).map((category) => category.name);
 
   const menuMarkup = CONFIG.menu
     .map(
@@ -832,28 +852,28 @@ function renderMenu() {
 
   host.innerHTML = `
     <h2 class="section-title">Menu</h2>
-    ${renderCategoryNav(menuByName)}
+    ${renderCategoryNav()}
     ${renderSpecials()}
     ${menuMarkup}
   `;
 
   host.querySelectorAll(".cat-btn[data-target-id]").forEach((button) => {
     button.addEventListener("click", () => {
+      if (button.disabled) return;
       const targetId = button.dataset.targetId;
-      const categoryName = button.dataset.categoryName || button.textContent || "";
       const targetEl = targetId ? document.getElementById(targetId) : null;
-      if (!targetEl) {
-        console.warn("Category not found:", categoryName, targetId);
-        return;
-      }
+      if (!targetEl) return;
       setActiveCategoryButton(targetId);
       targetEl.scrollIntoView({ behavior: "smooth", block: "start" });
     });
   });
 
-  const firstAvailable = CONFIG.categoryNav.find((name) => menuByName.has(name));
+  const firstAvailable = CONFIG.categoryNav.find((name) => findMatchingCategoryName(name, allCategoryNames));
   if (firstAvailable) {
-    setActiveCategoryButton(slugifyCategory(firstAvailable));
+    const matchName = findMatchingCategoryName(firstAvailable, allCategoryNames);
+    if (matchName) {
+      setActiveCategoryButton(slugifyCategory(matchName));
+    }
   }
 
   setupCategoryTracking();
