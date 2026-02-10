@@ -5,11 +5,12 @@ const CONFIG = {
   address: "220 W Ocean Blvd, Los Fresnos, TX 78566",
   theme: "light",
   links: {
-    doordash:
+    doordashUrl:
       "https://www.doordash.com/store/julia's-restaurant-los-fresnos-957078/1396781/?srsltid=AfmBOorMnND_yf2C0iToHYLKQc5TLc1MIkdjjuTAR0-ZODDiduHjOV5H",
-    ubereats: "",
-    facebook: "https://www.facebook.com/julias1991",
-    instagram: "https://www.instagram.com/juliasrestaurant1/?hl=en"
+    ubereatsUrl:
+      "https://www.ubereats.com/store/julias-restaurant/nCwHXEGWXqu6MeiNQkZlCw?utm_campaign=CM2508147-search-free-nonbrand-google-pas_e_all_acq_Global&utm_medium=search-free-nonbrand&utm_source=google-pas",
+    facebookUrl: "https://www.facebook.com/julias1991",
+    instagramUrl: "https://www.instagram.com/juliasrestaurant1/?hl=en"
   },
   assets: {
     logo: "assets/logo-julias.jpeg",
@@ -895,22 +896,21 @@ function renderActions() {
   host.innerHTML = `
     <h2 class="section-title">Order & Follow</h2>
     <div class="actions-grid">
-      <a class="btn btn-doordash" href="${CONFIG.links.doordash}" target="_blank" rel="noopener noreferrer">Order on DoorDash</a>
-      <button class="btn btn-ubereats" id="uberBtn" type="button">Uber Eats</button>
-      <a class="btn btn-facebook" href="${CONFIG.links.facebook}" target="_blank" rel="noopener noreferrer">Facebook</a>
-      <a class="btn btn-instagram" href="${CONFIG.links.instagram}" target="_blank" rel="noopener noreferrer">Instagram</a>
+      <a class="btn btn-doordash" href="${CONFIG.links.doordashUrl}" target="_blank" rel="noopener noreferrer">Order on DoorDash</a>
+      <button class="btn btn-ubereats" id="uberBtn" type="button">Order on Uber Eats</button>
+      <a class="btn btn-facebook" href="${CONFIG.links.facebookUrl}" target="_blank" rel="noopener noreferrer">Facebook</a>
+      <a class="btn btn-instagram" href="${CONFIG.links.instagramUrl}" target="_blank" rel="noopener noreferrer">Instagram</a>
     </div>
-    <div class="toast" id="toast" aria-live="polite"></div>
   `;
 
   const uberBtn = document.getElementById("uberBtn");
-  uberBtn?.addEventListener("click", () => {
-    if (!CONFIG.links.ubereats) {
-      showToast("Uber Eats coming soon.");
-      return;
-    }
-    window.open(CONFIG.links.ubereats, "_blank", "noopener,noreferrer");
-  });
+  if (uberBtn && CONFIG.links.ubereatsUrl) {
+    uberBtn.disabled = false;
+    uberBtn.removeAttribute("aria-disabled");
+    uberBtn.addEventListener("click", () => {
+      window.open(CONFIG.links.ubereatsUrl, "_blank", "noopener,noreferrer");
+    });
+  }
 }
 
 function renderFooter() {
